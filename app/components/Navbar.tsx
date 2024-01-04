@@ -1,5 +1,6 @@
 import { UserButton } from "@clerk/nextjs";
-import ActionLink from "./base/ActionLink";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -9,7 +10,9 @@ const Navbar = () => {
       </span>
       <div className="flex items-center space-x-4">
         <UserButton afterSignOutUrl="/" />
-        <ActionLink href="/login" name="Get Started" />
+        <Button className="bg-[#540E38] hover:bg-orange-500">
+          <Link href="messages">Get Started</Link>
+        </Button>
       </div>
     </nav>
   );

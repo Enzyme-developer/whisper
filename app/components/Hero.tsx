@@ -1,10 +1,11 @@
-import ActionLink from "./base/ActionLink";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const Hero = () => {
   return (
     <main className="flex justify-center items-center mt-20">
       <div className="max-w-4xl flex flex-col gap-4 items-center justify-center text-center">
-        <h1 className="text-5xl font-bold leading-snug text-[#171717]">
+        <h1 className="text-6xl font-bold leading-snug text-[#171717]">
           Discover the Power of <br /> Anonymity.
         </h1>
         <p className="text-[#282828]">
@@ -12,9 +13,10 @@ const Hero = () => {
           with others through anonymous messages or spark conversations with
           stealthy polls.
         </p>
-        <ActionLink href="/messages" name="Get Started" />
+        <Button className="bg-orange-500 hover:bg-[#540E38]" size="lg">
+          <Link href="messages">Get Started</Link>
+        </Button>
       </div>
-      <div></div>
     </main>
   );
 };
