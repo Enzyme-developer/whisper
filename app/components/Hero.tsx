@@ -3,20 +3,16 @@ import ActionLink from "./base/ActionLink";
 const Hero = () => {
   return (
     <main className="flex justify-center items-center mt-20">
-      <div className="max-w-6xl flex flex-col gap-4 items-center justify-center text-center">
-        <h1 className="text-6xl font-bold leading-snug">
-          Discover the Power of Anonymity.
-          <br /> Your Gateway to <span className="bg-[#FC881D] px-1">
-            Anonymous
-          </span>{" "}
-          Connections and Polls
+      <div className="max-w-4xl flex flex-col gap-4 items-center justify-center text-center">
+        <h1 className="text-5xl font-bold leading-snug text-[#171717]">
+          Discover the Power of <br /> Anonymity.
         </h1>
-        <p>
+        <p className="text-[#282828]">
           Whisper, where your voice can be heard without boundaries. Connect
           with others through anonymous messages or spark conversations with
           stealthy polls.
         </p>
-        <ActionLink href="/login" name="Get Started" />
+        <ActionLink href="/messages" name="Get Started" />
       </div>
       <div></div>
     </main>

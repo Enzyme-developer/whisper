@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col p-12 bg-[#7209b7]">
+    <main className="flex min-h-screen flex-col p-6 bg-white">
       <Navbar />
       <Hero />
     </main>

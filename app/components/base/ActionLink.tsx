@@ -9,7 +9,7 @@ type linkProps = {
 const ActionLink: FC<linkProps> = ({ name, href, ...props }) => {
   return (
     <Link
-      className="bg-[#4361ee] px-6 py-3 w-fit rounded-full text-center font-bold text-lg transition-all hover:bg-orange-500"
+      className="bg-[#540E38] px-6 py-3 w-fit rounded-full text-center font-bold text-lg transition-all hover:bg-orange-500"
       href={href}
     >
       {name}
