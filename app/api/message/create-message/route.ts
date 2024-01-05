@@ -4,25 +4,22 @@ import { NextRequest } from "next/server";
 import { z } from "zod";
 
 export async function POST(request: NextRequest) {
+  const { content, recipient } = await request.json();
   try {
-    const userId = auth()
-    const user = await currentUser()
-    console.log(user?.username)
-
-    if (!userId) {
-      return Response.json(
-        {
-          error: "Recipient not found",
-          message: null,
-        },
-        { status: 404 }
-      );
-    }
+    // if (!userId) {
+    //   return Response.json(
+    //     {
+    //       error: "Recipient not found",
+    //       message: null,
+    //     },
+    //     { status: 404 }
+    //   );
+    // }
 
     const createdMessage = await db.message.create({
       data: {
-        content: "hello",
-        recipient: "enzyme",
+        content,
+        recipient,
       },
     });
 

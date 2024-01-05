@@ -23,46 +23,22 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { MailCheck } from "lucide-react";
-import { useQueryClient } from "react-query";
+import { useToast } from "@/components/ui/use-toast";
+import { Loader2, MailCheck } from "lucide-react";
 import { useSendMessage } from "../hooks/useSend";
 
 const formSchema = z.object({
-  message: z.string().min(2).max(80, {
+  message: z.string().min(2).max(50, {
     message: "Message must be at least 2 characters.",
   }),
 });
 
-const SendMessage = () => {
+const SendMessage = ({ recipient }: { recipient: string }) => {
+  const { toast } = useToast();
   const [open, setOpen] = useState(false);
 
   const { mutate, isLoading, isError } = useSendMessage();
-
-  const handleSend = async () => {
-    // e.preventDefault();
-    // try {
-    //   const message = await createNewMessage();
-    //   console.log(message);
-    //   setOpen(true);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    mutate(
-      { author: "", title: "" },
-      {
-        onSuccess: (response) => {
-          console.log(response);
-          setOpen(true);
-        },
-      }
-    );
-  };
-
-  // const mutation = useMutation(sendMessage, {
-  //   onSuccess: () => {},
-  // });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,8 +48,22 @@ const SendMessage = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    handleSend();
+    mutate(
+      { recipient, content: values.message },
+      {
+        onSuccess: () => {
+          setOpen(true);
+        },
+        onError: (error) => {
+          console.log(error);
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "There was a problem with your submission",
+          });
+        },
+      }
+    );
   }
 
   return (
@@ -127,7 +117,8 @@ const SendMessage = () => {
             size="lg"
             type="submit"
           >
-            Send Message
+            {isLoading && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+            {isLoading ? "sending..." : "Send Message"}
           </Button>
         </form>
       </Form>

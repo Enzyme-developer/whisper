@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import QueryWrapper from "./helpers/QueryWrapper";
+import { Toaster } from "@/components/ui/toaster";
 
 const montserrat = Montserrat({
   weight: ["400", "700", "800"],
@@ -24,7 +25,10 @@ export default function RootLayout({
     <html lang="en">
       <ClerkProvider>
         <QueryWrapper>
-          <body className={montserrat.className}>{children}</body>
+          <body className={montserrat.className}>
+            <main>{children}</main>
+            <Toaster />
+          </body>
         </QueryWrapper>
       </ClerkProvider>
     </html>

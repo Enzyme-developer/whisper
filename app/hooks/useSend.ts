@@ -1,18 +1,11 @@
-import { useMutation } from 'react-query';
-import { createNewMessage } from '../helpers/createMessage';
-
-type Book = {
-  title: string;
-  author: string;
-}
+import { useMutation } from "react-query";
+import { createNewMessage } from "../helpers/createMessage";
 
 export const useSendMessage = () => {
   return useMutation(createNewMessage, {
-    onSuccess: () => {
-     console.log("success")
-    },
+    onSuccess: () => {},
     onError: (error) => {
-     console.log(error)
+      console.log(error);
     },
   });
 };

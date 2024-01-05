@@ -17,7 +17,7 @@ export default function Send({ params }: { params: { send: string } }) {
           <strong>{`@${params?.send}`}</strong> <br /> send me an anonymous
           message
         </span>
-        <SendMessage />
+        <SendMessage recipient={params.send} />
       </div>
     </main>
   );
