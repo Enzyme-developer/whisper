@@ -75,19 +75,18 @@ const SendMessage = ({ recipient }: { recipient: string }) => {
             <DialogDescription>
               Mission accomplished! Your anonymous note is on its way!
             </DialogDescription>
-            <MailCheck color="green" className="w-8 h-8 mx-auto" />
+            <MailCheck color="purple" className="w-8 h-8 mx-auto" />
             <p className="text-sm mt-4 text-center text-muted-foreground">
               Psst! Did you know? You are not just a sender; You are a reciever
               too. 📬
             </p>
           </DialogHeader>
-          <div className="grid gap-4 py-4"></div>
           <DialogFooter>
             <Button
               type="submit"
               className="w-full bg-[#540E38] hover:bg-orange-500"
             >
-              <Link href="messages"> Get your message</Link>
+              <Link href="/messages"> Get your message</Link>
             </Button>
           </DialogFooter>
         </DialogContent>
