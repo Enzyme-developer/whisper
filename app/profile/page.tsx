@@ -5,6 +5,7 @@ import UserProfile from "../components/UserProfile";
 
 export default async function Profile() {
   const user = await currentUser();
+
   return (
     <main className="h-[100vh] flex flex-col p-6">
       <Navbar />

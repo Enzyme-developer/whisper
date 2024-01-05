@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <main className="flex justify-center items-center mt-20">
       <div className="max-w-4xl flex flex-col gap-4 items-center justify-center text-center">
-        <h1 className="text-6xl font-bold leading-snug text-[#171717]">
+        <h1 className="text-6xl font-bold leading-snug text-[#540E38]">
           Discover the Power of <br /> Anonymity.
         </h1>
         <p className="text-[#282828]">
