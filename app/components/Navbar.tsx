@@ -8,7 +8,9 @@ const Navbar = () => {
   const { isSignedIn } = useUser();
   return (
     <nav className="flex justify-between items-center w-full">
-      <span className="font-bold text-lg leading-4 text-[#540E38]">Whisper</span>
+      <span className="font-bold text-lg leading-4 text-[#540E38]">
+        <Link href="/">Whisper</Link>
+      </span>
       <div className="flex items-center space-x-4">
         {isSignedIn ? (
           <NavActions />

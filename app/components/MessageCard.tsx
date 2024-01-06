@@ -2,8 +2,22 @@
 import { RefObject, useRef } from "react";
 import html2canvas from "html2canvas";
 import { Download } from "lucide-react";
+import { messageType } from "../types/types";
+import dayjs from "dayjs";
+var relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime);
 
-const MessageCard = () => {
+type DateType = string | number | Date;
+declare module "dayjs" {
+  interface Dayjs {
+    fromNow(withoutSuffix?: boolean): string;
+    from(compared: DateType, withoutSuffix?: boolean): string;
+    toNow(withoutSuffix?: boolean): string;
+    to(compared: DateType, withoutSuffix?: boolean): string;
+  }
+}
+
+const MessageCard = ({ message }: { message: messageType }) => {
   const exportRef: RefObject<HTMLDivElement> = useRef(null);
 
   const downloadImage = (blob: string, fileName: string) => {
@@ -26,6 +40,10 @@ const MessageCard = () => {
     downloadImage(image, imageFileName);
   };
 
+  const formattedDate = dayjs(message?.createdAt).format("YYYY-MM-DD");
+  dayjs.extend(relativeTime);
+  const timeFromNow = dayjs(formattedDate).fromNow();
+
   return (
     <div
       ref={exportRef}
@@ -36,12 +54,12 @@ const MessageCard = () => {
           Send me an anonymous message!
         </h1>
       </div>
-      <div className="bg-white p-2">
-        <p className=" text-base text-center font-semibold mt-2">
-          Hello Fela, I love you from the bottom of my heart
+      <div className="bg-white rounded-b-xl p-2">
+        <p className=" text-base text-center font-semibold mt-2 break-all">
+          {message?.content}
         </p>
         <div className="flex justify-between items-center mt-4">
-          <span className="font-medium text-sm">21 hours ago</span>
+          <span className="font-medium text-sm">{timeFromNow}</span>
           <Download
             onClick={() => exportAsImage(exportRef.current, "test")}
             className="w-5 h-5 cursor-pointer"

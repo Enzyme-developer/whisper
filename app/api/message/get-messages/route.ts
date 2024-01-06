@@ -7,7 +7,6 @@ export async function GET(request: NextRequest) {
   try {
     const userId = auth();
     const user = await currentUser();
-    console.log(user?.username);
 
     if (!userId) {
       return Response.json(
@@ -23,19 +22,18 @@ export async function GET(request: NextRequest) {
       where: { recipient: user?.username as string },
     });
 
-    console.log(allMessages);
     return Response.json({ error: null, messages: allMessages });
   } catch (error: any) {
     console.log(error);
     if (error instanceof z.ZodError) {
       return Response.json(
-        { error: error.issues, createdMessage: null },
+        { error: error.issues, messages: null },
         { status: 400 }
       );
     }
 
     return Response.json(
-      { error: "Internal Server Error", createdMessage: null },
+      { error: "Internal Server Error", messages: null },
       { status: 500 }
     );
   }

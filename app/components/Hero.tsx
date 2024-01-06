@@ -14,7 +14,7 @@ const Hero = () => {
           stealthy polls.
         </p>
         <Button className="bg-orange-500 hover:bg-[#540E38]" size="lg">
-          <Link href="messages">Get Started</Link>
+          <Link href="/sign-in">Get Started</Link>
         </Button>
       </div>
     </main>

@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/use-toast";
 
 const UserProfile = ({ username }: { username: string }) => {
-    const {toast} = useToast()
+  const { toast } = useToast();
   const handleCopy = (value: string) => {
     navigator.clipboard.writeText(value);
     toast({
