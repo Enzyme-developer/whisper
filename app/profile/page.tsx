@@ -9,7 +9,7 @@ export default async function Profile() {
   return (
     <main className="h-[100vh] flex flex-col p-6">
       <Navbar />
-      <div className="flex flex-col justify-center items-center space-y-6">
+      <div className="flex flex-col flex-grow justify-center items-center mt-6 space-y-6">
         <UserProfile username={user?.username as string} />
         <SocialShare username={user?.username as string} />
       </div>

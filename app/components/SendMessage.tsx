@@ -53,9 +53,14 @@ const SendMessage = ({ recipient }: { recipient: string }) => {
       {
         onSuccess: () => {
           setOpen(true);
+          form.reset();
+          toast({
+            variant: "success",
+            title: "It's delivery 0'clock.",
+            description: "Your message has been sent",
+          });
         },
         onError: (error) => {
-          console.log(error);
           toast({
             variant: "destructive",
             title: "Uh oh! Something went wrong.",
@@ -84,7 +89,7 @@ const SendMessage = ({ recipient }: { recipient: string }) => {
           <DialogFooter>
             <Button
               type="submit"
-              className="w-full bg-[#540E38] hover:bg-orange-500"
+              className="w-full bg-primary hover:bg-orange-500"
             >
               <Link href="/messages"> Get your message</Link>
             </Button>

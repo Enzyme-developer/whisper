@@ -3,19 +3,7 @@ import { RefObject, useRef } from "react";
 import html2canvas from "html2canvas";
 import { Download } from "lucide-react";
 import { messageType } from "../types/types";
-import dayjs from "dayjs";
-var relativeTime = require("dayjs/plugin/relativeTime");
-dayjs.extend(relativeTime);
-
-type DateType = string | number | Date;
-declare module "dayjs" {
-  interface Dayjs {
-    fromNow(withoutSuffix?: boolean): string;
-    from(compared: DateType, withoutSuffix?: boolean): string;
-    toNow(withoutSuffix?: boolean): string;
-    to(compared: DateType, withoutSuffix?: boolean): string;
-  }
-}
+import moment from "moment";
 
 const MessageCard = ({ message }: { message: messageType }) => {
   const exportRef: RefObject<HTMLDivElement> = useRef(null);
@@ -40,9 +28,8 @@ const MessageCard = ({ message }: { message: messageType }) => {
     downloadImage(image, imageFileName);
   };
 
-  const formattedDate = dayjs(message?.createdAt).format("YYYY-MM-DD");
-  dayjs.extend(relativeTime);
-  const timeFromNow = dayjs(formattedDate).fromNow();
+  const formattedDate = moment(message?.createdAt).toString();
+  const timeFromNow = moment(formattedDate).fromNow();
 
   return (
     <div

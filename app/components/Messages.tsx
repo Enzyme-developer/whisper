@@ -5,7 +5,7 @@ import { messageType } from "../types/types";
 import MessageCard from "./MessageCard";
 
 const Messages = () => {
-  const { toast } = useToast;
+  const { toast } = useToast();
   const { data: messages, isLoading, error } = useMessages();
 
   if (error) {
@@ -16,7 +16,6 @@ const Messages = () => {
     });
   }
 
-  console.log(messages);
   return (
     <div className="h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-10 my-16">
       {messages?.messages?.map((message: messageType, index: number) => (

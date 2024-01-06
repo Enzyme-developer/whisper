@@ -15,7 +15,7 @@ const UserProfile = ({ username }: { username: string }) => {
   };
 
   return (
-    <div className="flex flex-col space-y-4 mt-16">
+    <div className="flex flex-col space-y-4">
       <Avatar className="w-20 h-20 mx-auto">
         <AvatarImage
           src="https://storage.prompt-hunt.workers.dev/clh371gz6002dm8081ja28ryu_1"

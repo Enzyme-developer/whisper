@@ -20,6 +20,11 @@ export async function GET(request: NextRequest) {
 
     const allMessages = await db.message.findMany({
       where: { recipient: user?.username as string },
+      orderBy: [
+        {
+          createdAt: "desc",
+        },
+      ],
     });
 
     return Response.json({ error: null, messages: allMessages });
