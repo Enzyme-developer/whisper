@@ -6,7 +6,7 @@ export default authMiddleware({
     "/sign-in",
     "/sign-up",
     "/send/(.*)",
-    "/api/message/create-message",
+    "/api/webhook(.*)",
   ],
 });
 

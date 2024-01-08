@@ -1,6 +1,5 @@
 "use client";
-import { FormEvent, useState } from "react";
-import { createNewMessage } from "../helpers/createMessage";
+import { useState } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -120,6 +119,7 @@ const SendMessage = ({ recipient }: { recipient: string }) => {
             className="bg-[#540E38] hover:bg-orange-500"
             size="lg"
             type="submit"
+            disabled={isLoading}
           >
             {isLoading && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
             {isLoading ? "sending..." : "Send Message"}

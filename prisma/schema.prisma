@@ -8,11 +8,12 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-// model User {
-//   id       Int      @id @default(autoincrement())
-//   username String   @unique
-//   messages Message[]
-// }
+model User {
+  id       Int      @id @default(autoincrement())
+  externalId String   @unique
+  attributes    Json
+  createdAt DateTime @default(now())
+}
 
 model Message {
   id        Int      @id @default(autoincrement())

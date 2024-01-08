@@ -28,5 +28,6 @@ export const filterMessages = (
     }
   });
 
+  console.log(filteredMessages)
   return filteredMessages;
 };
