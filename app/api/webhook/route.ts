@@ -8,9 +8,7 @@ export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
-    throw new Error(
-      "Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local"
-    );
+    throw new Error("Please add WEBHOOK_SECRET");
   }
 
   // Get the headers
@@ -45,23 +43,23 @@ export async function POST(req: Request) {
     });
   }
 
-  const { id } = evt.data;
   const eventType = evt.type;
 
-  if (eventType == "email.created" || "user.created") {
+  if (eventType === "user.created") {
     const { id, ...attributes } = evt.data;
     console.log(`Webhook with and ID of ${id}`);
+    console.log(attributes.username);
+    const username= attributes.username
 
     await db.user.upsert({
       where: { externalId: id },
       create: {
         externalId: id as string,
-        attributes: attributes as JsonObject,
+        username: username as string,
+        attributes: attributes as unknown as JsonObject,
       },
-      update: { attributes: attributes as JsonObject },
+      update: { attributes: attributes as unknown as JsonObject },
     });
   }
-
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
   return new Response("", { status: 200 });
 }

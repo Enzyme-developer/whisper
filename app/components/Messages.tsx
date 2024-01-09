@@ -9,9 +9,7 @@ import { useEffect, useState } from "react";
 
 const Messages = () => {
   const { toast } = useToast();
-  const [category, setCategory] = useState("all");
   const { data: messages, isLoading, error } = useMessages();
-  const [filteredMessages, setFilteredMessages] = useState(messages?.messages);
 
   if (error) {
     toast({
@@ -21,20 +19,10 @@ const Messages = () => {
     });
   }
 
-
-  useEffect(() => {
-    setFilteredMessages(filterMessages(category, messages?.messages));
-      console.log(category);
-  
-  }, [category]);
-
   return (
     <div className="h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-10 my-16">
-      <Filter
-        setCategory={setCategory}
-        messages={messages?.messages}
-      />
-      {filteredMessages?.map((message: messageType, index: number) => (
+      {/* <Filter setCategory={setCategory} messages={messages?.messages} /> */}
+      {messages?.messages?.map((message: messageType, index: number) => (
         <MessageCard key={index} message={message} />
       ))}
     </div>

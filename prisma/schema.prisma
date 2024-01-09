@@ -3,16 +3,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  externalId String   @unique
-  attributes    Json
-  createdAt DateTime @default(now())
+  id         Int       @id @default(autoincrement())
+  externalId String    @unique
+  username String   @unique
+  attributes Json
+  createdAt  DateTime  @default(now())
+  Messages    Message[]
 }
 
 model Message {
@@ -20,5 +22,5 @@ model Message {
   content   String
   recipient String
   createdAt DateTime @default(now())
-  // user      User     @relation(fields: [recipient], references: [username])
+  user      User     @relation(fields: [recipient], references: [username])
 }
