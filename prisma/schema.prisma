@@ -15,6 +15,7 @@ model User {
   attributes Json
   createdAt  DateTime  @default(now())
   Messages    Message[]
+  Polls      Poll[]
 }
 
 model Message {
@@ -23,4 +24,15 @@ model Message {
   recipient String
   createdAt DateTime @default(now())
   user      User     @relation(fields: [recipient], references: [username])
+}
+
+model Poll {
+  id            Int      @id @default(autoincrement())
+  question      String
+  userId   String @unique
+  options       String[]
+  votes         Int[]
+  expirationDate DateTime
+  createdAt     DateTime @default(now())
+   user      User     @relation(fields: [userId], references: [username])
 }

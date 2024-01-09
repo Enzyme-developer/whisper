@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 
     return Response.json({ error: null, messages: allMessages });
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     if (error instanceof z.ZodError) {
       return Response.json(
         { error: error.issues, messages: null },
