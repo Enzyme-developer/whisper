@@ -11,10 +11,10 @@ datasource db {
 model User {
   id         Int       @id @default(autoincrement())
   externalId String    @unique
-  username String   @unique
+  username   String    @unique
   attributes Json
   createdAt  DateTime  @default(now())
-  Messages    Message[]
+  Messages   Message[]
   Polls      Poll[]
 }
 
@@ -27,12 +27,12 @@ model Message {
 }
 
 model Poll {
-  id            Int      @id @default(autoincrement())
-  question      String
-  userId   String @unique
-  options       String[]
-  votes         Int[]
+  id             Int      @id @default(autoincrement())
+  question       String
+  username       String   @unique
+  options        String[]
+  votes          Int[]
   expirationDate DateTime
-  createdAt     DateTime @default(now())
-   user      User     @relation(fields: [userId], references: [username])
+  createdAt      DateTime @default(now())
+  user           User     @relation(fields: [username], references: [username])
 }
