@@ -9,7 +9,7 @@ const createPollSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
-  const { question, options } = await createPollSchema.parse(request.json());
+  const { question, options } = await request.json();
   try {
     const user = await currentUser();
 

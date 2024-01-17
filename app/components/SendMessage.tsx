@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2, MailCheck } from "lucide-react";
-import { useSendMessage } from "../hooks/useSend";
+import { useSendMessage } from "../hooks/useMessages";
 
 const formSchema = z.object({
   message: z.string().min(2).max(50, {
@@ -59,7 +59,7 @@ const SendMessage = ({ recipient }: { recipient: string }) => {
             description: "Your message has been sent",
           });
         },
-        onError: (error) => {
+        onError: (error: unknown) => {
           toast({
             variant: "destructive",
             title: "Uh oh! Something went wrong.",

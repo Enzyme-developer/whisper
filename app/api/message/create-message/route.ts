@@ -10,8 +10,6 @@ export async function POST(request: NextRequest) {
         username: recipient
       },
     });
-
-    console.log(user)
     
     if (!user) {
       return Response.json(
