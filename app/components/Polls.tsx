@@ -17,7 +17,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,14 +25,22 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { Delete, Loader2, PlusIcon, Undo2Icon } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import Poll from "./Poll";
 
 const pollSchema = z.object({
   question: z.string().min(2).max(50, {
     message: "Message must be at least 2 characters.",
   }),
-  options: z.string().optional(),
+  options: z
+    .array(
+      z.object({
+        value: z.string(),
+        option: z.string(),
+      })
+    )
+    .min(2, { message: "minimum of 2 options is required" }),
 });
 
 const Polls = () => {
@@ -41,7 +48,7 @@ const Polls = () => {
   const [open, setOpen] = useState(false);
 
   const { data: polls, isLoading, error } = usePolls();
-  const { mutate, isLoading: creating, isError } = useCreatePoll();
+  const { mutate, isLoading: isCreating, isError } = useCreatePoll();
 
   if (error) {
     toast({
@@ -51,25 +58,19 @@ const Polls = () => {
     });
   }
 
-  const form = useForm<z.infer<typeof pollSchema>>({
-    resolver: zodResolver(pollSchema),
-    defaultValues: {
-      question: "",
-      options: [],
-    },
+  const { control, register, handleSubmit } = useForm({
+    // resolver: zodResolver(pollSchema),
+  });
+  const form = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "options",
   });
 
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control: form.control,
-      name: options,
-    }
-  );
-
-  function onSubmit(values: z.infer<typeof pollSchema>) {
-    console.log(values)
+  function onSubmit(values: any) {
+    console.log(values);
     // mutate(
-    //   { question: values.question, options: [] },
+    //   { question: values.question, options: values.options },
     //   {
     //     onSuccess: () => {
     //       setOpen(true);
@@ -92,30 +93,34 @@ const Polls = () => {
   }
 
   return (
-    <div className="h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-10 my-16">
-      <button onClick={() => setOpen(true)}>Create Poll</button>
+    <div className="flex flex-col my-12 h-full w-full ">
+      <Button
+        onClick={() => setOpen(true)}
+        className="flex self-end justify-self-end w-fit"
+      >
+        <PlusIcon className="w-5 h-5" color="white" />
+        Create Poll
+      </Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Create New Poll</DialogTitle>
             <DialogDescription>You are almost there!</DialogDescription>
-
             <Form {...form}>
               <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
+                onSubmit={handleSubmit(onSubmit)}
+                className="space-y-8 mt-2"
               >
                 <FormField
                   control={form.control}
                   name="question"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Your question</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="Type your question here."
                           {...field}
-                          id="question"
+                          {...register(`question`)}
                         />
                       </FormControl>
                       <FormMessage />
@@ -124,55 +129,54 @@ const Polls = () => {
                 />
 
                 {fields.map((field, index) => (
-                  <FormField
-                    key={field.id}
-                    control={form.control}
-                    name="options"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Options</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...form.register(`test.${index}.value`)}
-                            // {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <div className="flex items-center gap-3" key={index}>
+                    <Input
+                      key={field.id}
+                      {...register(`options.${index}.value`)}
+                      className="flex-1"
+                    />
+                    <Delete
+                      className="w-5 h-5"
+                      color="grey"
+                      type="button"
+                      onClick={() => remove(index)}
+                    >
+                      Delete
+                    </Delete>
+                  </div>
                 ))}
-                <button onClick={() => {
-  append({ test: 'test' });
-}}>Append</button>
 
                 <Button
-                  className="bg-[#540E38] hover:bg-orange-500"
-                  size="lg"
-                  type="submit"
-                  disabled={isLoading}
+                  onClick={() => {
+                    append({ option: "" });
+                  }}
                 >
-                  {isLoading && (
-                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                  )}
-                  {isLoading ? "creating..." : "Create Poll"}
+                  <PlusIcon className="mr-2" /> Add Option
                 </Button>
+                <DialogFooter>
+                  <Button
+                    className="bg-[#540E38] hover:bg-orange-500 block w-full"
+                    size="lg"
+                    type="submit"
+                    disabled={isCreating}
+                  >
+                    {isCreating && (
+                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    )}
+                    {isCreating ? "creating..." : "Create Poll"}
+                  </Button>
+                </DialogFooter>
               </form>
             </Form>
           </DialogHeader>
-          <DialogFooter>
-            <Button
-              type="submit"
-              className="w-full bg-primary hover:bg-orange-500"
-            >
-              Create
-            </Button>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
-      {polls?.polls?.map((poll: any, index: number) => (
-        <div key={index}>{poll.question}</div>
-      ))}
+      {/* {polls?.polls?.map((poll: any, index: number) => (
+        <Poll key={index} poll={poll} />
+      ))} */}
+      <div>
+        <Poll />
+      </div>
     </div>
   );
 };

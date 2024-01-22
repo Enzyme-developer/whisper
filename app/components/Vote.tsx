@@ -25,30 +25,25 @@ import {
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2, MailCheck } from "lucide-react";
-import { useSendMessage } from "../hooks/useMessages";
+import { useVote } from "../hooks/usePoll";
 
-const formSchema = z.object({
-  message: z.string().min(2).max(50, {
-    message: "Message must be at least 2 characters.",
-  }),
+const voteSchema = z.object({
+  optionIndex: z.string(),
 });
 
-const SendMessage = ({ recipient }: { recipient: string }) => {
+const Vote = ({ id }: { id: string }) => {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
 
-  const { mutate, isLoading, isError } = useSendMessage();
+  const { mutate, isLoading, isError } = useVote();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      message: "",
-    },
+  const form = useForm<z.infer<typeof voteSchema>>({
+    resolver: zodResolver(voteSchema),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof voteSchema>) {
     mutate(
-      { recipient, content: values.message },
+      { optionIndex: values.optionIndex, pollId: id },
       {
         onSuccess: () => {
           setOpen(true);
@@ -56,7 +51,7 @@ const SendMessage = ({ recipient }: { recipient: string }) => {
           toast({
             variant: "success",
             title: "It's delivery 0'clock.",
-            description: "Your message has been sent",
+            description: "Your vote has been cast",
           });
         },
         onError: (error: any) => {
@@ -79,12 +74,12 @@ const SendMessage = ({ recipient }: { recipient: string }) => {
           <DialogHeader>
             <DialogTitle>Success</DialogTitle>
             <DialogDescription>
-              Mission accomplished! Your anonymous note is on its way!
+              Mission accomplished! Your vote is on its way!
             </DialogDescription>
             <MailCheck color="purple" className="w-8 h-8 mx-auto" />
             <p className="text-sm mt-4 text-center text-muted-foreground">
-              Psst! Did you know? You are not just a sender; You are a reciever
-              too. 📬
+              Psst! Did you know? You are not just a voter; You can be the INEC
+              chairman too. 📬
             </p>
           </DialogHeader>
           <DialogFooter>
@@ -92,7 +87,7 @@ const SendMessage = ({ recipient }: { recipient: string }) => {
               type="submit"
               className="w-full bg-primary hover:bg-orange-500"
             >
-              <Link href="/messages"> Get your message</Link>
+              <Link href="/polls"> Get your Votes</Link>
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -102,7 +97,7 @@ const SendMessage = ({ recipient }: { recipient: string }) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
-            name="message"
+            name="optionIndex"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Your message</FormLabel>
@@ -124,7 +119,7 @@ const SendMessage = ({ recipient }: { recipient: string }) => {
             disabled={isLoading}
           >
             {isLoading && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
-            {isLoading ? "sending..." : "Send Message"}
+            {isLoading ? "voting..." : "Cast vote"}
           </Button>
         </form>
       </Form>
@@ -132,4 +127,4 @@ const SendMessage = ({ recipient }: { recipient: string }) => {
   );
 };
 
-export default SendMessage;
+export default Vote;

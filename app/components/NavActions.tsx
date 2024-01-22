@@ -14,6 +14,9 @@ const NavActions = () => {
       <Button variant="ghost" onClick={() => router.push("/messages")}>
         Messages
       </Button>
+      <Button variant="ghost" onClick={() => router.push("/polls")}>
+        Polls
+      </Button>
       <Button
         variant="destructive"
         onClick={() => signOut(() => router.push("/"))}

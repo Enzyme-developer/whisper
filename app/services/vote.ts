@@ -1,15 +1,17 @@
 import axios from "axios";
 
-export const createNewMessage = async (requestData: {
-  content: string;
-  recipient: string;
+export const vote = async (requestData: {
+  optionIndex: string;
+  pollId: string;
 }) => {
-  const { content, recipient } = requestData;
-  const { data } = await axios.post("/api/message/create-message", {
-    content,
-    recipient,
+  const { optionIndex, pollId } = requestData;
+  const { data } = await axios.post("/api/poll/vote-poll", {
+    optionIndex,
+    pollId,
   });
+    
   console.log(data);
+
   if (data.error || !data.createdMessage) {
     if (data.error instanceof Array) {
       throw new Error(data.error.join(""));

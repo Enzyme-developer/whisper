@@ -16,7 +16,7 @@ const config: Config = {
       },
       colors: {
         background: "rgba(13, 14, 37, 0.94)",
-        primary: "#540E38",
+        custom: "#540E38",
       },
     },
   },

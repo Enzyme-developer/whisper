@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "react-query";
-import { getMessages } from "../helpers/getMessages";
-import { createNewMessage } from "../helpers/createMessage";
+import { getMessages } from "../services/getMessages";
+import { createNewMessage } from "../services/createMessage";
 
 export const useMessages = () => {
   return useQuery("messages", () => getMessages());
