@@ -6,7 +6,6 @@ export const downloadImage = (blob: string, fileName: string) => {
     link.download = fileName;
 
     link.href = blob;
-    console.log(link);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

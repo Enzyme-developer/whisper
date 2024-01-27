@@ -6,7 +6,6 @@ import { useCreatePoll, usePolls } from "../hooks/usePoll";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -25,14 +24,14 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Delete, Loader2, PlusIcon, Undo2Icon } from "lucide-react";
+import { Delete, Loader2, PlusIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Poll from "./Poll";
 
 const pollSchema = z.object({
-  question: z.string().min(2).max(50, {
-    message: "Message must be at least 2 characters.",
-  }),
+  question: z
+    .string()
+    .min(3, { message: "Username must be at least 3 characters" }),
   options: z
     .array(
       z.object({
@@ -58,9 +57,13 @@ const Polls = () => {
     });
   }
 
-  const { control, register, handleSubmit } = useForm({
-    // resolver: zodResolver(pollSchema),
-  });
+  type validationType = z.infer<typeof pollSchema>;
+
+  const { control, register, handleSubmit, formState } =
+    useForm<validationType>({
+      resolver: zodResolver(pollSchema),
+    });
+
   const form = useForm();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -70,7 +73,7 @@ const Polls = () => {
   function onSubmit(values: any) {
     console.log(values);
     // mutate(
-    //   { question: values.question, options: values.options },
+    //   { question: values.question, options: ["Azeem", "Ayomide"] },
     //   {
     //     onSuccess: () => {
     //       setOpen(true);
@@ -104,13 +107,9 @@ const Polls = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Create New Poll</DialogTitle>
-            <DialogDescription>You are almost there!</DialogDescription>
+            <DialogTitle className="mb-6">Create New Poll</DialogTitle>
             <Form {...form}>
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="space-y-8 mt-2"
-              >
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
                   control={form.control}
                   name="question"
@@ -120,7 +119,7 @@ const Polls = () => {
                         <Textarea
                           placeholder="Type your question here."
                           {...field}
-                          {...register(`question`)}
+                          {...register("question")}
                         />
                       </FormControl>
                       <FormMessage />
@@ -130,7 +129,7 @@ const Polls = () => {
 
                 {fields.map((field, index) => (
                   <div className="flex items-center gap-3" key={index}>
-                    <Input
+                    <input
                       key={field.id}
                       {...register(`options.${index}.value`)}
                       className="flex-1"
@@ -148,7 +147,7 @@ const Polls = () => {
 
                 <Button
                   onClick={() => {
-                    append({ option: "" });
+                    append({ option: "", value: "" });
                   }}
                 >
                   <PlusIcon className="mr-2" /> Add Option

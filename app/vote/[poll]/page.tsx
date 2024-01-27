@@ -13,7 +13,7 @@ export default function Send({ params }: { params: { poll: string } }) {
         />
       </div>
       <div className="flex flex-col items-center justify-center w-full space-y-6 p-6">
-        <span className=" text-center">Cast your vote!</span>
+        <span className="font-extrabold text-lg text-center">Cast your vote!</span>
         <Vote id={params?.poll} />
       </div>
     </main>

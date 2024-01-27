@@ -14,7 +14,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
@@ -25,10 +24,11 @@ import {
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2, MailCheck } from "lucide-react";
-import { useVote } from "../hooks/usePoll";
+import { usePoll, useVote } from "../hooks/usePoll";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const voteSchema = z.object({
-  optionIndex: z.string(),
+  answer: z.string({ required_error: "You have to select an option" }),
 });
 
 const Vote = ({ id }: { id: string }) => {
@@ -36,35 +36,56 @@ const Vote = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
 
   const { mutate, isLoading, isError } = useVote();
+  const { data: poll, isLoading: pollLoading, error } = usePoll(id);
+  console.log(poll);
 
   const form = useForm<z.infer<typeof voteSchema>>({
     resolver: zodResolver(voteSchema),
   });
 
   function onSubmit(values: z.infer<typeof voteSchema>) {
-    mutate(
-      { optionIndex: values.optionIndex, pollId: id },
-      {
-        onSuccess: () => {
-          setOpen(true);
-          form.reset();
-          toast({
-            variant: "success",
-            title: "It's delivery 0'clock.",
-            description: "Your vote has been cast",
-          });
-        },
-        onError: (error: any) => {
-          toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description:
-              error?.response.data.error ||
-              "There was a problem with your submission",
-          });
-        },
+    if (typeof localStorage !== "undefined") {
+      if (localStorage.getItem("poll") == id) {
+        toast({
+          variant: "destructive",
+          title: "Electoral Malpractice.",
+          description: "You have casted your vote previously",
+        });
+        return;
       }
-    );
+      mutate(
+        { answer: values.answer, pollId: id },
+        {
+          onSuccess: () => {
+            setOpen(true);
+            localStorage.setItem("poll", JSON.stringify(id));
+            form.reset();
+            toast({
+              variant: "success",
+              title: "It's delivery 0'clock.",
+              description: "Your vote has been cast",
+            });
+          },
+          onError: (error: any) => {
+            toast({
+              variant: "destructive",
+              title: "Uh oh! Something went wrong.",
+              description:
+                error?.response.data.error ||
+                "There was a problem with your submission",
+            });
+          },
+        }
+      );
+    }
+  }
+
+  if (error) {
+    toast({
+      variant: "destructive",
+      title: "Something went wrong.",
+      description: error?.toString(),
+    });
   }
 
   return (
@@ -97,16 +118,34 @@ const Vote = ({ id }: { id: string }) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
-            name="optionIndex"
+            name="answer"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Your message</FormLabel>
+              <FormItem className="space-y-3">
+                <FormLabel className="text-lg">
+                  {poll?.poll?.question}
+                </FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Type your message here."
-                    {...field}
-                    id="message"
-                  />
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    className="flex flex-col space-y-1"
+                  >
+                    {poll?.poll?.options?.map(
+                      (option: string, index: number) => (
+                        <FormItem
+                          key={index}
+                          className="flex items-center space-x-3 space-y-0"
+                        >
+                          <FormControl>
+                            <RadioGroupItem value={option} />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            {option}
+                          </FormLabel>
+                        </FormItem>
+                      )
+                    )}
+                  </RadioGroup>
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -3,10 +3,13 @@ import { auth, currentUser } from "@clerk/nextjs";
 import { NextRequest } from "next/server";
 import { z } from "zod";
 
-export async function GET(request: NextRequest) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { slug: string } }
+) {
+  const pollId = params.slug;
+  console.log(pollId)
   try {
-    const pollId = await request.nextUrl.searchParams.get("pollId");
-
     if (!pollId) {
       return Response.json(
         {

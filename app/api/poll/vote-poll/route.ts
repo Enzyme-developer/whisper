@@ -2,16 +2,12 @@ import { db } from "@/app/lib/db";
 import { NextRequest } from "next/server";
 import { z } from "zod";
 
-const voteSchema = z.object({
-  pollId: z.number(),
-  optionIndex: z.number(),
-});
-
 export async function POST(request: NextRequest) {
-  const { optionIndex, pollId } = await voteSchema.parse(request.json());
+  const { answer, pollId } = await request.json();
+
   try {
     const poll = await db.poll.findUnique({
-      where: { id: pollId },
+      where: { id: parseInt(pollId) },
     });
 
     if (!poll || new Date() > new Date(poll.expirationDate)) {
@@ -24,12 +20,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const updatedVotes = [...(poll?.votes as any)];
+
+    const existingAnswerIndex = updatedVotes.findIndex(
+      (v) => v.answer === answer
+    );
+
+    console.log(existingAnswerIndex);
+    if (existingAnswerIndex !== -1) {
+      updatedVotes[existingAnswerIndex].votes += 1;
+    } else {
+      updatedVotes.push({
+        answer,
+        votes: 1,
+      });
+    }
+
     const updatedPoll = await db.poll.update({
-      where: { id: pollId },
+      where: { id: parseInt(pollId) },
       data: {
-        votes: {
-          increment: { [optionIndex]: 1 },
-        } as number[] | any,
+        votes: updatedVotes,
       },
     });
 
