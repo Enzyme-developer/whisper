@@ -29,9 +29,7 @@ import { Input } from "@/components/ui/input";
 import Poll from "./Poll";
 
 const pollSchema = z.object({
-  question: z
-    .string()
-    .min(3, { message: "Username must be at least 3 characters" }),
+  question: z.string().min(3, { message: "Please enter a question" }),
   options: z
     .array(
       z.object({
@@ -39,7 +37,7 @@ const pollSchema = z.object({
         option: z.string(),
       })
     )
-    .min(2, { message: "minimum of 2 options is required" }),
+    .min(2, { message: "A minimum of 2 options is required" }),
 });
 
 const Polls = () => {
@@ -59,40 +57,51 @@ const Polls = () => {
 
   type validationType = z.infer<typeof pollSchema>;
 
-  const { control, register, handleSubmit, formState } =
-    useForm<validationType>({
-      resolver: zodResolver(pollSchema),
-    });
+  const form = useForm<validationType>({
+    resolver: zodResolver(pollSchema),
+  });
 
-  const form = useForm();
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = form;
+
+  console.log(errors);
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "options",
   });
 
   function onSubmit(values: any) {
-    console.log(values);
-    // mutate(
-    //   { question: values.question, options: ["Azeem", "Ayomide"] },
-    //   {
-    //     onSuccess: () => {
-    //       setOpen(true);
-    //       form.reset();
-    //       toast({
-    //         variant: "success",
-    //         title: "Poll created successfully",
-    //         description: "You can now be the INEC to your Nigeria",
-    //       });
-    //     },
-    //     onError: (error: unknown) => {
-    //       toast({
-    //         variant: "destructive",
-    //         title: "Uh oh! Something went wrong.",
-    //         description: "There was a problem creating your poll",
-    //       });
-    //     },
-    //   }
-    // );
+    mutate(
+      {
+        question: values.question,
+        options: values.options.map(
+          (option: { value: string }) => option.value
+        ),
+      },
+      {
+        onSuccess: () => {
+          setOpen(true);
+          form.reset();
+          toast({
+            variant: "success",
+            title: "Poll created successfully",
+            description: "You can now be the INEC to your Nigeria",
+          });
+        },
+        onError: (error: unknown) => {
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "There was a problem creating your poll",
+          });
+        },
+      }
+    );
   }
 
   return (
@@ -129,11 +138,12 @@ const Polls = () => {
 
                 {fields.map((field, index) => (
                   <div className="flex items-center gap-3" key={index}>
-                    <input
+                    <Input
                       key={field.id}
                       {...register(`options.${index}.value`)}
                       className="flex-1"
                     />
+                    {/* <FormMessage /> */}
                     <Delete
                       className="w-5 h-5"
                       color="grey"
@@ -154,13 +164,13 @@ const Polls = () => {
                 </Button>
                 <DialogFooter>
                   <Button
-                    className="bg-[#540E38] hover:bg-orange-500 block w-full"
+                    className="bg-[#540E38] hover:bg-orange-500 w-full"
                     size="lg"
                     type="submit"
                     disabled={isCreating}
                   >
                     {isCreating && (
-                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                      <Loader2 className="w-5 h-5 animate-spin mr-2" />
                     )}
                     {isCreating ? "creating..." : "Create Poll"}
                   </Button>
