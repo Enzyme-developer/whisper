@@ -29,7 +29,7 @@ model Message {
 model Poll {
   id             Int      @id @default(autoincrement())
   question       String
-  username       String   @unique
+  username       String 
   options        String[]
   votes          Json[]
   expirationDate DateTime

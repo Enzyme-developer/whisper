@@ -33,8 +33,7 @@ const pollSchema = z.object({
   options: z
     .array(
       z.object({
-        value: z.string(),
-        option: z.string(),
+        fieldValue: z.string().min(1, "Option is required"),
       })
     )
     .min(2, { message: "A minimum of 2 options is required" }),
@@ -76,11 +75,12 @@ const Polls = () => {
   });
 
   function onSubmit(values: any) {
+    console.log(values);
     mutate(
       {
         question: values.question,
         options: values.options.map(
-          (option: { value: string }) => option.value
+          (option: { fieldValue: string }) => option.fieldValue
         ),
       },
       {
@@ -139,11 +139,12 @@ const Polls = () => {
                 {fields.map((field, index) => (
                   <div className="flex items-center gap-3" key={index}>
                     <Input
+                      {...field}
+                      {...register(`options.${index}.fieldValue`)}
                       key={field.id}
-                      {...register(`options.${index}.value`)}
                       className="flex-1"
                     />
-                    {/* <FormMessage /> */}
+
                     <Delete
                       className="w-5 h-5"
                       color="grey"
@@ -155,10 +156,17 @@ const Polls = () => {
                   </div>
                 ))}
 
+                <p className="text-sm text-red-500">
+                  {errors?.options?.root?.message}
+                </p>
                 <Button
                   onClick={() => {
-                    append({ option: "", value: "" });
+                    append({ fieldValue: "" });
                   }}
+                  disabled={
+                    errors?.options &&
+                    (!errors?.options.root as unknown as boolean)
+                  }
                 >
                   <PlusIcon className="mr-2" /> Add Option
                 </Button>
@@ -167,7 +175,7 @@ const Polls = () => {
                     className="bg-[#540E38] hover:bg-orange-500 w-full"
                     size="lg"
                     type="submit"
-                    disabled={isCreating}
+                    disabled={fields.length < 2 || isCreating}
                   >
                     {isCreating && (
                       <Loader2 className="w-5 h-5 animate-spin mr-2" />

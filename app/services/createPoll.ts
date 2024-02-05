@@ -10,7 +10,7 @@ export const createPoll = async (requestData: {
     options
   });
   console.log(data);
-  if (data.error || !data.createdMessage) {
+  if (data.error || !data.createdPoll) {
     if (data.error instanceof Array) {
       throw new Error(data.error.join(""));
     }

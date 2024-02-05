@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     const createdPoll = await db.poll.create({
       data: {
         question,
-        username: user?.username as string,
+        username: "zeet",
         options,
         expirationDate,
       },
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     }
 
     return Response.json(
-      { error: "Internal Server Error", createdMessage: null },
+      { error: "Internal Server Error", createdPoll: null },
       { status: 500 }
     );
   }
