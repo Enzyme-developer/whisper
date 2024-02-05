@@ -192,9 +192,6 @@ const Polls = () => {
       {polls?.polls?.map((poll: any, index: number) => (
         <Poll key={index} poll={poll} />
       ))}
-      <div>
-        <Poll />
-      </div>
     </div>
   );
 };
