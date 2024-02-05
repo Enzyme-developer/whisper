@@ -28,7 +28,7 @@ const UserProfile = ({ username }: { username: string }) => {
         <span className="text-sm text-muted-foreground text-center">{`whisper.vercel.com/${username}`}</span>
         <CopyIcon
           className="w-5 h-5 font-bold cursor-pointer hover:text-orange-500"
-          onClick={() => handleCopy(`whisper.vercel.com/${username}`)}
+          onClick={() => handleCopy(`whisper.vercel.app/${username}`)}
         />
       </div>
     </div>

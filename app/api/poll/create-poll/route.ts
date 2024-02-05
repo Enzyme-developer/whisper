@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     const createdPoll = await db.poll.create({
       data: {
         question,
-        username: "zeet",
+        username: user?.username as string,
         options,
         expirationDate,
       },

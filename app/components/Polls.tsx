@@ -68,6 +68,7 @@ const Polls = () => {
   } = form;
 
   console.log(errors);
+  console.log(polls);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -188,9 +189,9 @@ const Polls = () => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      {/* {polls?.polls?.map((poll: any, index: number) => (
+      {polls?.polls?.map((poll: any, index: number) => (
         <Poll key={index} poll={poll} />
-      ))} */}
+      ))}
       <div>
         <Poll />
       </div>

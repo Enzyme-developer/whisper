@@ -20,16 +20,21 @@ const calligraphy = Calligraffitti({
   subsets: ["latin"],
 });
 
-const votes: any[] = [];
+const votes = [{ value: 10 }, { value: 20 }, { value: 30 }, { value: 5 }];
+const sum = votes.reduce(
+  (accumulator: number, currentValue: { value: number }) =>
+    accumulator + currentValue.value,
+  0
+);
 
-const Poll = () => {
+const Poll = ({}) => {
   const exportRef: RefObject<HTMLDivElement> = useRef(null);
   const { user } = useUser();
 
   return (
     <Card
       ref={exportRef}
-      className="w-[350px] bg-gradient-to-r from-[#540E38] to-purple-800 text-white"
+      className="w-[350px] bg-gradientBg bg-cover bg-center text-white"
     >
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
@@ -53,7 +58,13 @@ const Poll = () => {
           {votes?.map((vote, index: number) => (
             <div key={index} className="flex flex-col space-y-1.5">
               <p className="text-md font-medium">Getting the B.sc</p>
-              <Progress value={80} />
+              <div className="flex gap-2 items-center">
+                <Progress
+                  className="flex-1"
+                  value={(vote.value / sum) * 100}
+                />
+                <p>{Math.round((vote.value / sum) * 100)}%</p>
+              </div>
             </div>
           ))}
         </div>
