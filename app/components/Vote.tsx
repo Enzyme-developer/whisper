@@ -49,7 +49,7 @@ const Vote = ({ id }: { id: string }) => {
         toast({
           variant: "destructive",
           title: "Electoral Malpractice.",
-          description: "You have casted your vote previously",
+          description: "You have cast your vote previously",
         });
         return;
       }
