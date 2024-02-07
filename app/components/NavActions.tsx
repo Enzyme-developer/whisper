@@ -2,24 +2,56 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useClerk } from "@clerk/clerk-react";
+import { Dispatch, SetStateAction } from "react";
 
-const NavActions = () => {
+type NavActionProps = {
+  setOpen?: Dispatch<SetStateAction<boolean>>;
+};
+
+const NavActions = ({ setOpen }: NavActionProps) => {
   const { signOut } = useClerk();
   const router = useRouter();
+
+  const links = [
+    {
+      route: "Profile",
+      href: "/profile",
+    },
+    {
+      route: "Messages",
+      href: "/messages",
+    },
+    {
+      route: "Polls",
+      href: "/polls",
+    },
+  ];
+
   return (
     <>
-      <Button variant="ghost" onClick={() => router.push("/profile")}>
-        Profile
-      </Button>
-      <Button variant="ghost" onClick={() => router.push("/messages")}>
-        Messages
-      </Button>
-      <Button variant="ghost" onClick={() => router.push("/polls")}>
-        Polls
-      </Button>
+      {links.map((link, index: number) => (
+        <Button
+          key={index}
+          variant="ghost"
+          onClick={() => {
+            router.push(link.href as string);
+            if (setOpen !== undefined) {
+              setOpen(false);
+            }
+          }}
+        >
+          {link.route}
+        </Button>
+      ))}
+
       <Button
         variant="destructive"
-        onClick={() => signOut(() => router.push("/"))}
+        onClick={() => {
+          signOut(() => router.push("/"));
+          if (setOpen !== undefined) {
+            setOpen(false);
+          }
+        }}
       >
         Sign Out
       </Button>

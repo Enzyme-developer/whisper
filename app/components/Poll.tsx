@@ -27,7 +27,7 @@ const sum = votes.reduce(
   0
 );
 
-const Poll = ({}) => {
+const Poll = ({ }) => {
   const exportRef: RefObject<HTMLDivElement> = useRef(null);
   const { user } = useUser();
 
@@ -59,10 +59,7 @@ const Poll = ({}) => {
             <div key={index} className="flex flex-col space-y-1.5">
               <p className="text-md font-medium">Getting the B.sc</p>
               <div className="flex gap-2 items-center">
-                <Progress
-                  className="flex-1"
-                  value={(vote.value / sum) * 100}
-                />
+                <Progress className="flex-1" value={(vote.value / sum) * 100} />
                 <p>{Math.round((vote.value / sum) * 100)}%</p>
               </div>
             </div>

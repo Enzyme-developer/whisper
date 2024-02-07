@@ -7,9 +7,7 @@ export default async function messages() {
     <div className="flex flex-col p-6 min-h-[100vh]">
       <Navbar />
       <div className="flex flex-grow items-center justify-center ">
-        <Suspense fallback={<p>Loading messages...</p>}>
-          <Messages />
-        </Suspense>
+        <Messages />
       </div>
     </div>
   );

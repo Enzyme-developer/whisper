@@ -11,12 +11,14 @@ import {
 } from "react-share";
 
 const SocialShare = ({ username }: { username: string }) => {
-  const url = `whisper.vercel.com/${username}`;
+  const url = `whisper.vercel.app/${username}`;
   const body =
     "Got secrets? Leave me an anonymous message and keep the mystery alive! Shhh... 💌";
   return (
     <div className="text-center">
-      <span className="text-base text-[#540E38] font-black">Share on social media</span>
+      <span className="text-base text-[#540E38] font-black">
+        Share on social media
+      </span>
       <div className="flex space-x-4 items-center my-4">
         <FacebookShareButton
           resetButtonStyle={false}

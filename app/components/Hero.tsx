@@ -9,7 +9,7 @@ const Hero = () => {
   return (
     <main className="flex flex-col justify-center items-center mt-20">
       <FadeInView className="max-w-4xl flex flex-col gap-4 items-center justify-center text-center">
-        <h1 className="text-6xl font-extrabold leading-snug text-[#540E38]">
+        <h1 className="text-4xl md:text-6xl font-extrabold leading-snug text-[#540E38]">
           Discover the Power of <br /> Anonymity.
         </h1>
         <p className="text-[#282828]">
@@ -23,7 +23,7 @@ const Hero = () => {
       </FadeInView>
 
       <FadeInUp>
-        <Image alt="connect" src={connect} className="mt-12 w-96 h-96" />
+        <Image alt="connect" src={connect} className="mt-12 w-72 md:w-96 h-72 md:h-96" />
       </FadeInUp>
     </main>
   );

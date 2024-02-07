@@ -3,6 +3,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useMessages } from "../hooks/useMessages";
 import { messageType } from "../types/types";
 import MessageCard from "./MessageCard";
+import Loading from "../loading";
 
 const Messages = () => {
   const { toast } = useToast();
@@ -16,13 +17,13 @@ const Messages = () => {
     });
   }
 
-  // if (!messages) {
-  //   return <p> OOps...No message yet</p>;
-  // }
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  //   if (isLoading) {
-  //     return <p> Loading...</p>;
-  //   }
+  if (!messages.length) {
+    return <p> OOps...Nothing to see here</p>;
+  }
 
   return (
     <div className="h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-10 my-16">

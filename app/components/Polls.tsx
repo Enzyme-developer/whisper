@@ -27,6 +27,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Delete, Loader2, PlusIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Poll from "./Poll";
+import Loading from "../loading";
 
 const pollSchema = z.object({
   question: z.string().min(3, { message: "Please enter a question" }),
@@ -105,8 +106,12 @@ const Polls = () => {
     );
   }
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="flex flex-col my-12 h-full w-full ">
+    <div className="flex flex-col my-12 min-h-screen w-full ">
       <Button
         onClick={() => setOpen(true)}
         className="flex self-end justify-self-end w-fit"
@@ -189,6 +194,12 @@ const Polls = () => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+
+      {polls?.polls?.length === 0 && (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-center">OOps...Nothing to see here</p>
+        </div>
+      )}
       {polls?.polls?.map((poll: any, index: number) => (
         <Poll key={index} poll={poll} />
       ))}
