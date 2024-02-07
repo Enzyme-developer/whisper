@@ -26,6 +26,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Loader2, MailCheck } from "lucide-react";
 import { usePoll, useVote } from "../hooks/usePoll";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import Loading from "../loading";
 
 const voteSchema = z.object({
   answer: z.string({ required_error: "You have to select an option" }),
@@ -79,6 +80,10 @@ const Vote = ({ id }: { id: string }) => {
       );
     }
   }
+
+    if (isLoading) {
+      return <Loading />;
+    }
 
   if (error) {
     toast({

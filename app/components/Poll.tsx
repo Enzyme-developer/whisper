@@ -27,7 +27,7 @@ const sum = votes.reduce(
   0
 );
 
-const Poll = ({ }) => {
+const Poll = ({ poll }: { poll: any }) => {
   const exportRef: RefObject<HTMLDivElement> = useRef(null);
   const { user } = useUser();
 
