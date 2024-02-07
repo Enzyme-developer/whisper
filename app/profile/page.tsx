@@ -7,7 +7,7 @@ export default async function Profile() {
   const user = await currentUser();
 
   return (
-    <main className="h-[100vh] flex flex-col p-6">
+    <main className="min-h-[100vh] flex flex-col p-6">
       <Navbar />
       <div className="flex flex-col flex-grow justify-center items-center mt-6 space-y-6">
         <UserProfile username={user?.username as string} />
