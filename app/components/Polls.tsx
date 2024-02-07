@@ -110,7 +110,7 @@ const Polls = () => {
   }
 
   return (
-    <div className="flex flex-col my-12 min-h-screen w-full ">
+    <div className="flex flex-col my-12 min-h-full w-full ">
       <Button
         onClick={() => setOpen(true)}
         className="flex self-end justify-self-end w-fit"
