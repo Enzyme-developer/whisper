@@ -28,8 +28,8 @@ const Poll = ({ poll }: { poll: any }) => {
   const { toast } = useToast();
   const votes = poll?.votes;
 
-  const handleCopy = (value: string) => {
-    navigator.clipboard.writeText(value);
+  const handleCopy = (votes: string) => {
+    navigator.clipboard.writeText(votes);
     toast({
       variant: "success",
       title: "Voting link copied",
@@ -38,8 +38,8 @@ const Poll = ({ poll }: { poll: any }) => {
   };
 
   const sum = votes.reduce(
-    (accumulator: number, currentValue: { votes: number }) =>
-      accumulator + currentValue.votes,
+    (accumulator: number, currentvotes: { votes: number }) =>
+      accumulator + currentvotes.votes,
     0
   );
 
@@ -73,18 +73,20 @@ const Poll = ({ poll }: { poll: any }) => {
           {votes && votes.length > 0 ? (
             <>
               <p className="text-md font-medium my-2">{sum} total Vote(s)</p>
-              {votes.map((vote: { value: number }, index: number) => (
-                <div key={index} className="flex flex-col space-y-1.5">
-                  <p className="text-md font-medium">Getting the B.sc</p>
-                  <div className="flex gap-2 items-center">
-                    <Progress
-                      className="flex-1"
-                      value={(vote.value / sum) * 100}
-                    />
-                    <p>{Math.round((vote.value / sum) * 100)}%</p>
+              {votes.map(
+                (vote: { votes: number, answer: string }, index: number) => (
+                  <div key={index} className="flex flex-col space-y-1.5">
+                    <p className="text-md font-medium">{vote?.answer}</p>
+                    <div className="flex gap-2 items-center">
+                      <Progress
+                        className="flex-1"
+                        value={(vote.votes / sum) * 100}
+                      />
+                      <p>{Math.round((vote.votes / sum) * 100)}%</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              )}
             </>
           ) : (
             <p>No votes yet</p>
