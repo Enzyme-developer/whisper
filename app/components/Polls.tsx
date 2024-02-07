@@ -70,9 +70,6 @@ const Polls = () => {
     formState: { errors },
   } = form;
 
-  console.log(errors);
-  console.log(polls);
-
   const { fields, append, remove } = useFieldArray({
     control,
     name: "options",
