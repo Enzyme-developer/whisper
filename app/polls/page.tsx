@@ -3,9 +3,11 @@ import Navbar from "../components/Navbar";
 
 export default function Home() {
   return (
-    <main className="bg-white flex min-h-full flex-col p-6">
+    <main className="flex flex-col p-6 min-h-[100vh]">
       <Navbar />
-      <Polls />
+      <div className="flex flex-grow items-center justify-center ">
+        <Polls />
+      </div>
     </main>
   );
 }

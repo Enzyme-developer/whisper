@@ -109,11 +109,13 @@ const Polls = () => {
     return <Loading />;
   }
 
+  console.log(polls)
+
   return (
     <div className="flex flex-col my-12 min-h-full w-full ">
       <Button
         onClick={() => setOpen(true)}
-        className="flex self-end justify-self-end w-fit"
+        className="flex self-end justify-self-end w-fit mb-4"
       >
         <PlusIcon className="w-5 h-5" color="white" />
         Create Poll
@@ -194,13 +196,7 @@ const Polls = () => {
         </DialogContent>
       </Dialog>
 
-      <div className="flex flex-1 items-center justify-center">
-        {polls?.polls?.length === 0 && (
-          <div className="flex flex-col items-center justify-center space-y-6 ">
-            <Image src={connect} alt="connect" className="h-40 w-40" />
-            <p className="text-center">OOps...Nothing to see here</p>
-          </div>
-        )}
+      <div className="bg-red-400 grid items-center justify-center h-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-10 my-16">
         {polls?.polls?.map((poll: any, index: number) => (
           <Poll key={index} poll={poll} />
         ))}

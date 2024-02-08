@@ -1,6 +1,5 @@
 import Navbar from "../components/Navbar";
 import Messages from "../components/Messages";
-import { Suspense } from "react";
 
 export default async function messages() {
   return (

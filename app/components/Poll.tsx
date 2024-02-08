@@ -46,6 +46,9 @@ const Poll = ({ poll }: { poll: any }) => {
   const formattedDate = moment(poll?.createdAt).toString();
   const timeFromNow = moment(formattedDate).fromNow();
 
+  const filtered = poll?.votes.filter((vote: any) => vote.answer === "Yes");
+  console.log(filtered);
+
   return (
     <Card
       ref={exportRef}
@@ -70,27 +73,32 @@ const Poll = ({ poll }: { poll: any }) => {
 
       <CardContent>
         <div className="grid w-full items-center gap-4">
-          {votes && votes.length > 0 ? (
-            <>
-              <p className="text-md font-medium my-2">{sum} total Vote(s)</p>
-              {votes.map(
-                (vote: { votes: number, answer: string }, index: number) => (
-                  <div key={index} className="flex flex-col space-y-1.5">
-                    <p className="text-md font-medium">{vote?.answer}</p>
-                    <div className="flex gap-2 items-center">
-                      <Progress
-                        className="flex-1"
-                        value={(vote.votes / sum) * 100}
-                      />
-                      <p>{Math.round((vote.votes / sum) * 100)}%</p>
-                    </div>
-                  </div>
-                )
-              )}
-            </>
-          ) : (
-            <p>No votes yet</p>
-          )}
+          <p className="text-md font-medium my-2">{sum} total Vote(s)</p>
+          {poll?.options?.map((option: string, index: number) => (
+            <div key={index} className="flex flex-col space-y-1.5">
+              <p className="text-md font-medium">{option}</p>
+              <div className="flex gap-2 items-center">
+                <Progress
+                  className="flex-1"
+                  value={
+                    (poll?.votes.filter(
+                      (vote: any) => vote.answer === option
+                    )[0].votes /
+                      sum) *
+                      100 || 0
+                  }
+                />
+
+                <p>
+                  {(poll?.votes.filter((vote: any) => vote.answer === option)[0]
+                    .votes /
+                    sum) *
+                    100 || 0}
+                  %
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </CardContent>
 

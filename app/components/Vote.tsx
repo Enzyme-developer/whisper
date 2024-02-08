@@ -38,7 +38,6 @@ const Vote = ({ id }: { id: string }) => {
 
   const { mutate, isLoading, isError } = useVote();
   const { data: poll, isLoading: pollLoading, error } = usePoll(id);
-  console.log(poll);
 
   const form = useForm<z.infer<typeof voteSchema>>({
     resolver: zodResolver(voteSchema),
@@ -81,9 +80,9 @@ const Vote = ({ id }: { id: string }) => {
     }
   }
 
-    if (isLoading) {
-      return <Loading />;
-    }
+  if (pollLoading) {
+    return <Loading />;
+  }
 
   if (error) {
     toast({
