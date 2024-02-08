@@ -8,6 +8,8 @@ export default authMiddleware({
     "/send/(.*)",
     "/vote/(.*)",
     "/api/webhook(.*)",
+    "/api/message/create-message",
+    "/api/poll/vote-poll",
   ],
   ignoredRoutes: [
     "/",

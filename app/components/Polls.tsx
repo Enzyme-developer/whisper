@@ -105,8 +105,6 @@ const Polls = () => {
     );
   }
 
-  console.log(polls);
-
   if (isLoading) {
     return <Loading />;
   }
