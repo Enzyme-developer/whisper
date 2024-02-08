@@ -14,6 +14,7 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Whisper",
   description: "Connect, Vote, and Express Anonymously",
+  metadataBase: new URL("https://whisper-me.vercel.app/"),
 };
 
 export default function RootLayout({
