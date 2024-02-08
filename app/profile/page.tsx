@@ -2,6 +2,12 @@ import { currentUser } from "@clerk/nextjs";
 import Navbar from "../components/Navbar";
 import SocialShare from "../components/SocialShare";
 import UserProfile from "../components/UserProfile";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Whisper",
+  description: "Connect, Vote, and Express Anonymously",
+};
 
 export default async function Profile() {
   const user = await currentUser();

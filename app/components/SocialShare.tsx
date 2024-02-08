@@ -11,7 +11,7 @@ import {
 } from "react-share";
 
 const SocialShare = ({ username }: { username: string }) => {
-  const url = `whisper.vercel.app/${username}`;
+  const url = `whisper-me.vercel.app/${username}`;
   const body =
     "Got secrets? Leave me an anonymous message and keep the mystery alive! Shhh... 💌";
   return (

@@ -1,6 +1,12 @@
 import Image from "next/image";
 import connect from "../../assets/connect.svg";
 import Vote from "@/app/components/Vote";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Whisper",
+  description: "Connect, Vote, and Express Anonymously",
+};
 
 export default function Send({ params }: { params: { poll: string } }) {
   return (

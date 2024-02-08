@@ -1,5 +1,11 @@
 import Navbar from "../components/Navbar";
 import Messages from "../components/Messages";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Whisper",
+  description: "Send me an anonymous message",
+};
 
 export default async function messages() {
   return (
