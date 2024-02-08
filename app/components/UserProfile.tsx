@@ -25,10 +25,10 @@ const UserProfile = ({ username }: { username: string }) => {
       </Avatar>
       <p className="font-bold text-center text-[#540E38]">{username}</p>
       <div className="flex space-x-2 items-center justify-center">
-        <span className="text-sm text-muted-foreground text-center">{`whisper-me.vercel.app/${username}`}</span>
+        <span className="text-sm text-muted-foreground text-center">{`https://whisper-me.vercel.app/${username}`}</span>
         <CopyIcon
           className="w-5 h-5 font-bold cursor-pointer hover:text-orange-500"
-          onClick={() => handleCopy(`whisper-me.vercel.app/${username}`)}
+          onClick={() => handleCopy(`https://whisper-me.vercel.app/${username}`)}
         />
       </div>
     </div>

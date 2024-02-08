@@ -111,7 +111,7 @@ const Poll = ({ poll }: { poll: any }) => {
         />
         <CopyIcon
           className="w-5 h-5 font-bold cursor-pointer hover:text-orange-500"
-          onClick={() => handleCopy(`whisper-me.vercel.app/vote/${poll?.id}`)}
+          onClick={() => handleCopy(`https://whisper-me.vercel.app/vote/${poll?.id}`)}
         />
       </CardFooter>
     </Card>
