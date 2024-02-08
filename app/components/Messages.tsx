@@ -21,8 +21,12 @@ const Messages = () => {
     return <Loading />;
   }
 
-  if (!messages) {
-    return <p> OOps...Nothing to see here</p>;
+  if (!messages || messages.messages.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-sm text-gray-500 font-medium">No messages to display...</p>
+      </div>
+    );
   }
 
   return (
