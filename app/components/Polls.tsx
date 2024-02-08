@@ -112,7 +112,7 @@ const Polls = () => {
   console.log(polls);
 
   return (
-    <div className="flex flex-col bg-red-400 my-12 min-h-full w-full ">
+    <div className="flex flex-col my-12 min-h-full w-full ">
       <Button
         onClick={() => setOpen(true)}
         className="flex self-end justify-self-end w-fit mb-4"
@@ -196,7 +196,7 @@ const Polls = () => {
         </DialogContent>
       </Dialog>
 
-      <div className="bg-green-500 grid items-center justify-center w-full h-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-10">
+      <div className="grid items-center justify-center w-full h-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-10">
         {polls?.polls?.map((poll: any, index: number) => (
           <div key={index} className="flex items-center justify-center">
             <Poll poll={poll} />
