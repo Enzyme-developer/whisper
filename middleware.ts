@@ -9,6 +9,19 @@ export default authMiddleware({
     "/vote/(.*)",
     "/api/webhook(.*)",
   ],
+  ignoredRoutes: [
+    "/",
+    "/sign-in",
+    "/sign-up",
+    "/send/(.*)",
+    "/vote/(.*)",
+    "/api/webhook(.*)",
+  ],
+  // afterAuth(auth, req, evt) {
+  //   if (auth.isApiRoute || auth.isPublicRoute) {
+  //     return;
+  //   }
+  // },
 });
 
 export const config = {
