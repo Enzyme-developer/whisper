@@ -1,6 +1,5 @@
 import Image from "next/image";
-import gradient from "../assets/gradient.jpg";
-import connect from "../assets/connect.svg";
+import connect from "../../assets/connect.svg";
 import SendMessage from "../../components/SendMessage";
 
 export default function Send({ params }: { params: { send: string } }) {
