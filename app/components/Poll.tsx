@@ -81,19 +81,24 @@ const Poll = ({ poll }: { poll: any }) => {
                 <Progress
                   className="flex-1"
                   value={
-                    (poll?.votes.filter(
-                      (vote: any) => vote.answer === option
-                    )[0]?.votes /
-                      sum) *
-                      100 || 0
+                    Math.round(
+                      (poll?.votes.filter(
+                        (vote: any) => vote.answer === option
+                      )[0]?.votes /
+                        sum) *
+                        100
+                    ) || 0
                   }
                 />
 
                 <p>
-                  {(poll?.votes.filter((vote: any) => vote.answer === option)[0]
-                    ?.votes /
-                    sum) *
-                    100 || 0}
+                  {Math.round(
+                    (poll?.votes.filter(
+                      (vote: any) => vote.answer === option
+                    )[0]?.votes /
+                      sum) *
+                      100
+                  ) || 0}
                   %
                 </p>
               </div>
@@ -111,7 +116,9 @@ const Poll = ({ poll }: { poll: any }) => {
         />
         <CopyIcon
           className="w-5 h-5 font-bold cursor-pointer hover:text-orange-500"
-          onClick={() => handleCopy(`https://whisper-me.vercel.app/vote/${poll?.id}`)}
+          onClick={() =>
+            handleCopy(`https://whisper-me.vercel.app/vote/${poll?.id}`)
+          }
         />
       </CardFooter>
     </Card>
