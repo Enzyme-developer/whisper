@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getPolls } from "../services/getPolls";
 import { createPoll } from "../services/createPoll";
 import { vote } from "../services/vote";
@@ -9,12 +9,15 @@ export const usePolls = () => {
 };
 
 export const usePoll = (id: string) => {
-  return useQuery("poll", () => getPoll(id));
+  return useQuery("polls", () => getPoll(id));
 };
 
 export const useCreatePoll = () => {
+  const queryClient = useQueryClient();
   return useMutation(createPoll, {
-    onSuccess: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries("polls")
+    },
     onError: (error) => {
       console.log(error);
     },

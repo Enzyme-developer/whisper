@@ -52,7 +52,7 @@ const Poll = ({ poll }: { poll: any }) => {
   return (
     <Card
       ref={exportRef}
-      className="w-[350px] bg-gradientBg bg-cover bg-center text-white"
+      className="w-full md:w-[350px] bg-gradientBg bg-cover bg-center text-white"
     >
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
@@ -83,7 +83,7 @@ const Poll = ({ poll }: { poll: any }) => {
                   value={
                     (poll?.votes.filter(
                       (vote: any) => vote.answer === option
-                    )[0].votes /
+                    )[0]?.votes /
                       sum) *
                       100 || 0
                   }
@@ -91,7 +91,7 @@ const Poll = ({ poll }: { poll: any }) => {
 
                 <p>
                   {(poll?.votes.filter((vote: any) => vote.answer === option)[0]
-                    .votes /
+                    ?.votes /
                     sum) *
                     100 || 0}
                   %
@@ -111,7 +111,7 @@ const Poll = ({ poll }: { poll: any }) => {
         />
         <CopyIcon
           className="w-5 h-5 font-bold cursor-pointer hover:text-orange-500"
-          onClick={() => handleCopy(`whisper-orcin.vercel.app/${poll?.id}`)}
+          onClick={() => handleCopy(`whisper-orcin.vercel.app/vote/${poll?.id}`)}
         />
       </CardFooter>
     </Card>
