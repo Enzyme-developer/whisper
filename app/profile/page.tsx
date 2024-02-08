@@ -7,6 +7,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Whisper",
   description: "Connect, Vote, and Express Anonymously",
+  metadataBase: new URL("https://whisper-me.vercel.app/"),
 };
 
 export default async function Profile() {

@@ -5,6 +5,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Whisper",
   description: "Send me an anonymous message",
+  metadataBase: new URL("https://whisper-me.vercel.app/"),
 };
 
 export default async function messages() {
