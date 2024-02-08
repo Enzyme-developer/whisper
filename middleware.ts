@@ -10,6 +10,7 @@ export default authMiddleware({
     "/api/webhook(.*)",
     "/api/message/create-message",
     "/api/poll/vote-poll",
+    "/api/poll/(.*)",
   ],
   ignoredRoutes: [
     "/",
@@ -17,7 +18,6 @@ export default authMiddleware({
     "/sign-up",
     "/send/(.*)",
     "/vote/(.*)",
-    "/api/poll/(.*)",
     "/api/webhook(.*)",
   ],
   // afterAuth(auth, req, evt) {
