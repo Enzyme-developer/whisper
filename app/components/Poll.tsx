@@ -75,7 +75,7 @@ const Poll = ({ poll }: { poll: any }) => {
         <div className="grid w-full items-center gap-4">
           <p className="text-md font-medium my-2">{sum} total Vote(s)</p>
           {poll?.options?.map((option: string, index: number) => (
-            <div key={index} className="flex flex-col space-y-1.5">
+            <div key={index} className="flex flex-col gap-1.5">
               <p className="text-md font-medium">{option}</p>
               <div className="flex gap-2 items-center">
                 <Progress
