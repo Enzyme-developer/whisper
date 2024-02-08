@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main className="flex flex-col p-6 min-h-[100vh]">
       <Navbar />
-      <div className="flex flex-grow items-center justify-center ">
+      <div className="flex flex-grow">
         <Polls />
       </div>
     </main>
