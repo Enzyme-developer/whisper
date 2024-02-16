@@ -23,10 +23,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { Loader2, MailCheck } from "lucide-react";
+import { Loader2, Loader2Icon, MailCheck } from "lucide-react";
 import { usePoll, useVote } from "../hooks/usePoll";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import Loading from "../loading";
 
 const voteSchema = z.object({
   answer: z.string({ required_error: "You have to select an option" }),
@@ -81,7 +80,7 @@ const Vote = ({ id }: { id: string }) => {
   }
 
   if (pollLoading) {
-    return <Loading />;
+    return <Loader2Icon className="animate-spin w-8 h-8" color="purple" />;
   }
 
   if (error) {

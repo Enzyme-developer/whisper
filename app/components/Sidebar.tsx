@@ -40,7 +40,7 @@ export function Sidebar() {
           {isSignedIn ? (
             <NavActions setOpen={setSheetOpen} />
           ) : (
-            <Button className="bg-[#540E38] hover:bg-orange-500">
+            <Button className="bg-[#540E38] hover:bg-orange-500 mt-4">
               <Link href="/messages">Get Started</Link>
             </Button>
           )}
