@@ -9,17 +9,18 @@ datasource db {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  externalId String    @unique
-  username   String    @unique
+  id         Int        @id @default(autoincrement())
+  externalId String     @unique
+  username   String     @unique
   attributes Json
-  createdAt  DateTime  @default(now())
+  createdAt  DateTime   @default(now())
   Messages   Message[]
   Polls      Poll[]
+  Wishlist   Wishlist[]
 }
 
 model Message {
-  id   String @id @default(uuid())
+  id        String   @id @default(uuid())
   content   String
   recipient String
   createdAt DateTime @default(now())
@@ -27,12 +28,22 @@ model Message {
 }
 
 model Poll {
-  id   String @id @default(uuid())
+  id             String   @id @default(uuid())
   question       String
-  username       String 
+  username       String
   options        String[]
   votes          Json[]
   expirationDate DateTime
+  createdAt      DateTime @default(now())
+  user           User     @relation(fields: [username], references: [username])
+}
+
+model Wishlist {
+  id             String   @id @default(uuid())
+  title          String
+  username       String
+  options        String[]
+  grants         Json[]
   createdAt      DateTime @default(now())
   user           User     @relation(fields: [username], references: [username])
 }

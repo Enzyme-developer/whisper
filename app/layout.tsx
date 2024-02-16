@@ -32,6 +32,7 @@ export default function RootLayout({
               {children}
               <Footer />
             </main>
+
             <Toaster />
           </body>
         </QueryWrapper>

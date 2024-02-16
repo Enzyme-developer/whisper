@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const poll = await db.poll.findUnique({
-      where: { id: parseInt(pollId) },
+      where: { id: pollId },
     });
 
     if (!poll || new Date() > new Date(poll.expirationDate)) {
@@ -26,7 +26,6 @@ export async function POST(request: NextRequest) {
       (v) => v.answer === answer
     );
 
-    console.log(existingAnswerIndex);
     if (existingAnswerIndex !== -1) {
       updatedVotes[existingAnswerIndex].votes += 1;
     } else {
@@ -37,7 +36,7 @@ export async function POST(request: NextRequest) {
     }
 
     const updatedPoll = await db.poll.update({
-      where: { id: parseInt(pollId) },
+      where: { id: pollId },
       data: {
         votes: updatedVotes,
       },
@@ -48,13 +47,13 @@ export async function POST(request: NextRequest) {
     console.error(error);
     if (error instanceof z.ZodError) {
       return Response.json(
-        { error: error.issues, updatedMessage: null },
+        { error: error.issues, updatedPoll: null },
         { status: 400 }
       );
     }
 
     return Response.json(
-      { error: "Internal Server Error", updatedMessage: null },
+      { error: "Internal Server Error", updatedPoll: null },
       { status: 500 }
     );
   }

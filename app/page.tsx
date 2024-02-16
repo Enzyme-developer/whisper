@@ -1,6 +1,7 @@
 import FaqSection from "./components/FaqSection";
 import Features from "./components/Features";
 import Hero from "./components/Hero";
+import HowItWorks from "./components/HowItWorks";
 import Navbar from "./components/Navbar";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Features />
+      {/* <HowItWorks /> */}
       <FaqSection />
     </main>
   );

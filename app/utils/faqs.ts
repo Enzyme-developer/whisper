@@ -20,7 +20,7 @@ export const faqData = [
       "The Wishlist feature in Whisper allows users to create a list of desired items they would like to and others can promise to gift them the item anonymously.",
   },
   {
-    question: "Can I see who gifted me an item from my Wishlist?",
+    question: "Can I see who gifted me an item?",
     answer:
       "Yes, if the person who chose to gift you an item decides to reveal their identity, you will see who the generous giver is. However, users have the option to remain anonymous, adding an element of surprise to the gift-giving experience.",
   },
