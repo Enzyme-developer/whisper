@@ -1,3 +1,4 @@
+import Cta from "./components/Cta";
 import FaqSection from "./components/FaqSection";
 import Features from "./components/Features";
 import Hero from "./components/Hero";
@@ -12,6 +13,7 @@ export default function Home() {
       <Features />
       <HowItWorks />
       <FaqSection />
+      <Cta />
     </main>
   );
 }
