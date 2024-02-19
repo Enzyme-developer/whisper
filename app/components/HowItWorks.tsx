@@ -12,7 +12,7 @@ const HowItWorks = () => {
       <h1 className="text-2xl md:text-3xl font-extrabold leading-snug text-[#540E38]">
         How It Works
       </h1>
-      <p className="text-[#282828]">
+      <p className="text-[#282828] text-center">
         <strong>What's Boredom?</strong> With Whisper, get rid of boredom!
       </p>
       <Image
