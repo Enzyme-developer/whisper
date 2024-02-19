@@ -21,7 +21,7 @@ export async function GET(
     }
 
     const poll = await db.poll.findUnique({
-      where: { id: parseInt(pollId) },
+      where: { id: pollId },
     });
 
     return Response.json({ error: null, poll });
