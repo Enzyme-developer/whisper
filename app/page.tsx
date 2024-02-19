@@ -7,7 +7,7 @@ import Navbar from "./components/Navbar";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col p-6 bg-white">
+    <main className="overflow-hidden flex min-h-screen flex-col p-6 bg-white">
       <Navbar />
       <Hero />
       <Features />

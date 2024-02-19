@@ -9,18 +9,21 @@ import {
 import React from "react";
 import { featureType } from "../types/types";
 import Icon from "./Icon";
+import FadeIn from "../animations/FadeIn";
 
 const Feature = ({ featureData }: { featureData: featureType }) => {
   return (
-    <Card className="w-full md:w-[320px]">
-      <CardHeader>
-        <Icon name={featureData.icon} />
-        <CardTitle className="text-lg">{featureData.title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <CardDescription>{featureData.description}</CardDescription>
-      </CardContent>
-    </Card>
+    <FadeIn className="w-full md:w-[320px]">
+      <Card>
+        <CardHeader>
+          <Icon name={featureData.icon} />
+          <CardTitle className="text-lg">{featureData.title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CardDescription>{featureData.description}</CardDescription>
+        </CardContent>
+      </Card>
+    </FadeIn>
   );
 };
 
