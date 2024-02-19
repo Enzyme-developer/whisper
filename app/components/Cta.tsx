@@ -5,7 +5,7 @@ import FadeInView from "../animations/FadeInView";
 const Cta = () => {
   return (
     <FadeInView className="flex flex-col items-center justify-center max-w-5xl my-6 gap-4">
-      <p className="text-[#282828]">
+      <p className="text-[#282828] text-center">
         <strong>Ready to get mysterious?</strong> Click the button below to get
         started!
       </p>

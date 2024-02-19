@@ -4,10 +4,11 @@ import Image from "next/image";
 import boredIllustration from "../assets/WhisperIllustration.svg";
 import { steps } from "../utils/steps";
 import Step from "./Step";
+import FadeInRight from "../animations/FadeInRight";
 
 const HowItWorks = () => {
   return (
-    <div className="my-12 flex flex-col items-center justify-center">
+    <FadeInRight className="my-12 flex flex-col items-center justify-center">
       <h1 className="text-2xl md:text-3xl font-extrabold leading-snug text-[#540E38]">
         How It Works
       </h1>
@@ -24,7 +25,7 @@ const HowItWorks = () => {
           <Step key={index} step={step} />
         ))}
       </div>
-    </div>
+    </FadeInRight>
   );
 };
 
