@@ -19,7 +19,7 @@ const HowItWorks = () => {
         className="w-80 h-80 my-4"
         alt="bored illustration"
       />
-      <div className="flex gap-6 my-6 ">
+      <div className="flex flex-wrap items-center justify-center gap-8 my-8 ">
         {steps.map((step, index: number) => (
           <Step key={index} step={step} />
         ))}
