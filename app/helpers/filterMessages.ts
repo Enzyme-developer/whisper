@@ -7,7 +7,6 @@ export const filterMessages = (
   category: string,
   messages: messageType[] | undefined
 ) => {
-
   if (!messages) {
     return;
   }
@@ -31,7 +30,5 @@ export const filterMessages = (
         return true;
     }
   });
-
-  console.log(filteredMessages);
   return filteredMessages;
 };

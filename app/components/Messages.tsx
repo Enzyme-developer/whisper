@@ -21,8 +21,6 @@ const Messages = () => {
   const [category, setCategory] = useState("all");
   const [newMessages, setNewMessages] = useState<any>([]);
 
-  console.log(category);
-
   useEffect(() => {
     const msg = filterMessages(category, messages?.messages);
     setNewMessages(msg);
