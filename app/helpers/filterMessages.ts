@@ -7,13 +7,14 @@ export const filterMessages = (
   category: string,
   messages: messageType[] | undefined
 ) => {
+
   if (!messages) {
-    return [];
+    return;
   }
 
   const isSameDay = (a: moment.Moment, b: moment.Moment) => a.isSame(b, "day");
 
-  const filteredMessages = messages.filter((message) => {
+  const filteredMessages = messages?.filter((message) => {
     const messageDate = moment(message.createdAt);
 
     switch (category) {
@@ -22,12 +23,15 @@ export const filterMessages = (
       case "yesterday":
         return isSameDay(currentDate.subtract(1, "day"), messageDate);
       case "older":
-        return messageDate.isBefore(currentDate.subtract(2, "day"), "day");
+        return (
+          !isSameDay(currentDate, messageDate) &&
+          !isSameDay(currentDate.subtract(1, "day"), messageDate)
+        );
       default:
         return true;
     }
   });
 
-  console.log(filteredMessages)
+  console.log(filteredMessages);
   return filteredMessages;
 };
