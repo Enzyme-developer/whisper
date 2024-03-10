@@ -42,6 +42,7 @@ model Wishlist {
   id             String   @id @default(uuid())
   title          String
   username       String
+  picture        String
   options        String[]
   grants         Json[]
   createdAt      DateTime @default(now())

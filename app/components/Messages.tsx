@@ -1,4 +1,6 @@
 "use client";
+
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
 import { useToast } from "@/components/ui/use-toast";
 import { useMessages } from "../hooks/useMessages";
 import { messageType } from "../types/types";
@@ -14,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { beamsTokenProvider } from "../utils/tokenProvider";
 
 const Messages = () => {
   const { toast } = useToast();
@@ -25,6 +28,30 @@ const Messages = () => {
     const msg = filterMessages(category, messages?.messages);
     setNewMessages(msg);
   }, [category, messages]);
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((registration) => console.log("scope is: ", registration.scope));
+    }
+  }, []);
+
+  useEffect(() => {
+    const beamsClient = new PusherPushNotifications.Client({
+      instanceId: "9d0cb332-f930-4409-b039-d4e8afb25d5e",
+    });
+
+    beamsClient
+      .start()
+      .then(() => beamsClient.setUserId("USER_ID_HERE", beamsTokenProvider))
+      .catch(console.error);
+
+    // Clean up
+    return () => {
+      beamsClient.stop().catch(console.error);
+    };
+  }, []);
 
   if (error) {
     toast({

@@ -5,6 +5,7 @@ import "./globals.css";
 import QueryWrapper from "./helpers/QueryWrapper";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "./components/Footer";
+import "@uploadthing/react/styles.css";
 
 const montserrat = Montserrat({
   weight: ["400", "700", "800"],

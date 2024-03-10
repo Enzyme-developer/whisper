@@ -1,8 +1,8 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs";
 import { db } from "@/app/lib/db";
-import { JsonObject } from "@prisma/client/runtime/library";
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
@@ -46,20 +46,28 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created") {
-    const { id, ...attributes } = evt.data;
-    console.log(`Webhook with and ID of ${id}`);
-    console.log(attributes.username);
-    const username= attributes.username
+    const { id, email_addresses, image_url, first_name, last_name, username } =
+      evt.data;
 
-    await db.user.upsert({
-      where: { externalId: id },
-      create: {
-        externalId: id as string,
-        username: username as string,
-        attributes: attributes as unknown as JsonObject,
-      },
-      update: { attributes: attributes as unknown as JsonObject },
-    });
+    const user = {
+      clerkId: id,
+      email: email_addresses[0].email_address,
+      username: username!,
+      firstName: first_name,
+      lastName: last_name,
+      photo: image_url,
+    };
+
+    const newUser = await db.user.create({ data: user });
+
+    // Set public metadata
+    if (newUser) {
+      await clerkClient.users.updateUserMetadata(id, {
+        publicMetadata: {
+          userId: newUser.id,
+        },
+      });
+    }
   }
-  return new Response("", { status: 200 });
+  return new Response("OK", { status: 200 });
 }

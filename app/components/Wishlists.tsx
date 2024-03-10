@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { CameraIcon } from "lucide-react";
 import React, { useRef } from "react";
+import { UploadButton } from "../helpers/uploadthing";
 
 const Wishlists = () => {
   const targetButtonRef = useRef(null);
@@ -33,6 +33,17 @@ const Wishlists = () => {
         type="file"
         className="hidden"
         ref={targetButtonRef}
+      />
+
+      <UploadButton
+        endpoint="imageUploader"
+        onClientUploadComplete={(res: any) => {
+          console.log("Files: ", res);
+          alert("Upload Completed");
+        }}
+        onUploadError={(error: Error) => {
+          alert(`ERROR! ${error.message}`);
+        }}
       />
     </div>
   );

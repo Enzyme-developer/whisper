@@ -11,6 +11,7 @@ export default authMiddleware({
     "/api/message/create-message",
     "/api/poll/vote-poll",
     "/api/poll/(.*)",
+    "/api/uploadthing"
   ],
   ignoredRoutes: [
     "/",
