@@ -37,6 +37,8 @@ const Poll = ({ poll }: { poll: any }) => {
     });
   };
 
+  console.log(poll)
+
   const sum = votes.reduce(
     (accumulator: number, currentvotes: { votes: number }) =>
       accumulator + currentvotes.votes,
@@ -76,7 +78,16 @@ const Poll = ({ poll }: { poll: any }) => {
           <p className="text-md font-medium my-2">{sum} total Vote(s)</p>
           {poll?.options?.map((option: string, index: number) => (
             <div key={index} className="flex flex-col gap-1.5">
-              <p className="text-md font-medium">{option}</p>
+              <div className="flex space-x-3">
+                <p className="text-md font-medium">{option}</p>
+                <p>
+                  {
+                    poll?.votes.filter((vote: any) => vote.answer === option)[0]
+                      ?.votes
+                  } Vote(s)
+                </p>
+              </div>
+
               <div className="flex gap-2 items-center">
                 <Progress
                   className="flex-1"
