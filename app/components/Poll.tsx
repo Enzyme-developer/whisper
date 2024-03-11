@@ -37,8 +37,6 @@ const Poll = ({ poll }: { poll: any }) => {
     });
   };
 
-  console.log(poll)
-
   const sum = votes.reduce(
     (accumulator: number, currentvotes: { votes: number }) =>
       accumulator + currentvotes.votes,
