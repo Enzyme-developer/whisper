@@ -29,15 +29,20 @@ export async function GET(request: NextRequest) {
     });
 
     allMessages.forEach((message) => {
-      const decData = CryptoJS.enc.Base64.parse(message.content).toString(
-        CryptoJS.enc.Utf8
-      );
-      const bytes = CryptoJS.AES.decrypt(
-        decData,
-        process.env.ENCRYPTION_KEY
-      ).toString(CryptoJS.enc.Utf8);
+      try {
+        const decData = CryptoJS.enc.Base64.parse(message.content).toString(
+          CryptoJS.enc.Utf8
+        );
+        const decryptedData = CryptoJS.AES.decrypt(
+          decData,
+          process.env.ENCRYPTION_KEY
+        ).toString(CryptoJS.enc.Utf8);
 
-      message.content = JSON.parse(bytes);
+        message.content = JSON.parse(decryptedData);
+
+      } catch (error) {
+        return
+      }
     });
 
     return Response.json({ error: null, messages: allMessages });
