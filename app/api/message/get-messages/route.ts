@@ -2,6 +2,7 @@ import { db } from "@/app/lib/db";
 import { auth, currentUser } from "@clerk/nextjs";
 import { NextRequest } from "next/server";
 import { z } from "zod";
+var CryptoJS = require("crypto-js");
 
 export async function GET(request: NextRequest) {
   try {
@@ -25,6 +26,23 @@ export async function GET(request: NextRequest) {
           createdAt: "desc",
         },
       ],
+    });
+
+    allMessages.forEach((message) => {
+      try {
+        const decData = CryptoJS.enc.Base64.parse(message.content).toString(
+          CryptoJS.enc.Utf8
+        );
+        const decryptedData = CryptoJS.AES.decrypt(
+          decData,
+          process.env.ENCRYPTION_KEY
+        ).toString(CryptoJS.enc.Utf8);
+
+        message.content = JSON.parse(decryptedData);
+
+      } catch (error) {
+        return
+      }
     });
 
     return Response.json({ error: null, messages: allMessages });
