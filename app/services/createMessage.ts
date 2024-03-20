@@ -8,7 +8,7 @@ export const createNewMessage = async (requestData: {
   const formattedRecipient = recipient.toLowerCase()
   const { data } = await axios.post("/api/message/create-message", {
     content,
-    formattedRecipient,
+    recipient: formattedRecipient,
   });
 
   if (data.error || !data.createdMessage) {

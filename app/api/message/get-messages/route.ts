@@ -9,6 +9,8 @@ export async function GET(request: NextRequest) {
     const userId = auth();
     const user = await currentUser();
 
+    console.log(user)
+
     if (!userId) {
       return Response.json(
         {
